@@ -11,18 +11,18 @@ This repository is a **template**. It contains a fully configured `.devcontainer
 
 ```mermaid
 %%{init: {"themeVariables": {"fontSize": "18px"}}}%%
-flowchart LR
+flowchart TB
   subgraph HOST["🖥️ Your Computer"]
-    direction TB
+    direction LR
     VS["🧑‍💻 You, in VS Code<br/>feels like working normally"]
-    SEC["🔑 Rest of your computer<br/>passwords · keys · files · admin"]
     subgraph BOX["🔒 Sandbox — a sealed box"]
-      AI["🤖 AI assistant<br/>Copilot / Claude Code<br/>+ your project code"]
+      AI["🤖 AI assistant · Copilot / Claude Code<br/>+ your project code"]
     end
+    SEC["🔑 Rest of your computer<br/>passwords · keys · files · admin"]
   end
-  FW{{"🧱 Guarded exit<br/>checks every request"}}
-  NET["✅ Approved sites<br/>GitHub · npm · Anthropic"]
-  WEB["⛔ Everything else<br/>on the internet"]
+  FW{{"🛡️ Guarded exit — checks every request"}}
+  NET["✅ Approved sites · GitHub · npm · Anthropic"]
+  WEB["⛔ Everything else on the internet"]
 
   VS <-->|"edit code live"| AI
   AI -. "🚫 can't touch" .-x SEC
