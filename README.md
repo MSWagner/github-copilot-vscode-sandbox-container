@@ -9,23 +9,43 @@
 
 This repository is a **template**. It contains a fully configured `.devcontainer/` folder that you copy into your own project. This gives you a sandboxed development environment that looks and feels like working locally - but runs inside an isolated container.
 
+```mermaid
+%%{init: {"themeVariables": {"fontSize": "18px"}}}%%
+flowchart LR
+  subgraph HOST["🖥️ Your Computer"]
+    direction TB
+    VS["🧑‍💻 You, in VS Code<br/>feels like working normally"]
+    SEC["🔑 Rest of your computer<br/>passwords · keys · files · admin"]
+    subgraph BOX["🔒 Sandbox — a sealed box"]
+      AI["🤖 AI assistant<br/>Copilot / Claude Code<br/>+ your project code"]
+    end
+  end
+  FW{{"🧱 Guarded exit<br/>checks every request"}}
+  NET["✅ Approved sites<br/>GitHub · npm · Anthropic"]
+  WEB["⛔ Everything else<br/>on the internet"]
+
+  VS <-->|"edit code live"| AI
+  AI -. "🚫 can't touch" .-x SEC
+  AI -->|"wants to connect"| FW
+  FW -->|"allowed"| NET
+  FW -. "blocked" .-x WEB
+
+  classDef host fill:#f1f5f9,stroke:#94a3b8,color:#0f172a,font-size:18px;
+  classDef box fill:#e0ecff,stroke:#2563eb,color:#0f172a,font-size:18px;
+  classDef ai fill:#dbeafe,stroke:#1d4ed8,color:#0f172a,font-weight:600,font-size:18px;
+  classDef sec fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,font-size:18px;
+  classDef fw fill:#fef3c7,stroke:#d97706,color:#78350f,font-size:18px;
+  classDef net fill:#dcfce7,stroke:#16a34a,color:#14532d,font-size:18px;
+  class HOST host
+  class BOX box
+  class AI ai
+  class SEC sec
+  class WEB sec
+  class FW fw
+  class NET net
 ```
-┌─────────────────────────────────────────────────────┐
-│  Your Machine (Host)                                │
-│                                                     │
-│  ┌──────────────┐    ┌────────────────────────────┐ │
-│  │  VS Code UI  │◄──►│  Container Runtime (VM)    │ │
-│  │  (runs on    │    │  ┌──────────────────────┐  │ │
-│  │   your       │    │  │  Container           │  │ │
-│  │   machine)   │    │  │  • Python 3.12       │  │ │
-│  │              │    │  │  • Node.js (nvm)     │  │ │
-│  │              │    │  │  • Copilot / Claude  │  │ │
-│  │              │    │  │  • Egress Firewall   │  │ │
-│  │              │    │  │  • your project code │  │ │
-│  └──────────────┘    │  └──────────────────────┘  │ │
-│                      └────────────────────────────┘ │
-└─────────────────────────────────────────────────────┘
-```
+
+*You edit in VS Code as usual, but Copilot / Claude Code run inside an isolated sandbox: from there they can't touch your files, keys, or passwords, and can only reach a short allow-list of sites — everything else is blocked.*
 
 ## Pre-Installed Tools
 
