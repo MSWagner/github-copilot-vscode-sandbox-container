@@ -10,33 +10,35 @@
 This repository is a **template**. It contains a fully configured `.devcontainer/` folder that you copy into your own project. This gives you a sandboxed development environment that looks and feels like working locally - but runs inside an isolated container.
 
 ```mermaid
-%%{init: {"themeVariables": {"fontSize": "18px"}}}%%
-flowchart TB
+flowchart LR
   subgraph HOST["🖥️ Your Computer"]
-    direction LR
+    direction TB
     VS["🧑‍💻 You, in VS Code<br/>feels like working normally"]
     subgraph BOX["🔒 Sandbox — a sealed box"]
-      AI["🤖 AI assistant · Copilot / Claude Code<br/>+ your project code"]
+      AI["🤖 AI assistant<br/>Copilot / Claude Code<br/>+ your project code"]
     end
     SEC["🔑 Rest of your computer<br/>passwords · keys · files · admin"]
+    VS <-->|"edit code live"| AI
+    AI -. "🚫 can't touch" .-x SEC
   end
-  FW{{"🛡️ Guarded exit — checks every request"}}
-  NET["✅ Approved sites · GitHub · npm · Anthropic"]
-  WEB["⛔ Everything else on the internet"]
+  subgraph NETZONE["🌐 Outside world"]
+    direction TB
+    FW{{"🛡️ Guarded exit<br/>checks every request"}}
+    NET["✅ Approved sites<br/>GitHub · npm · Anthropic"]
+    WEB["⛔ Everything else<br/>on the internet"]
+    FW -->|"allowed"| NET
+    FW -. "blocked" .-x WEB
+  end
+  HOST ==>|"wants to connect"| NETZONE
 
-  VS <-->|"edit code live"| AI
-  AI -. "🚫 can't touch" .-x SEC
-  AI -->|"wants to connect"| FW
-  FW -->|"allowed"| NET
-  FW -. "blocked" .-x WEB
-
-  classDef host fill:#f1f5f9,stroke:#94a3b8,color:#0f172a,font-size:18px;
-  classDef box fill:#e0ecff,stroke:#2563eb,color:#0f172a,font-size:18px;
-  classDef ai fill:#dbeafe,stroke:#1d4ed8,color:#0f172a,font-weight:600,font-size:18px;
-  classDef sec fill:#fee2e2,stroke:#dc2626,color:#7f1d1d,font-size:18px;
-  classDef fw fill:#fef3c7,stroke:#d97706,color:#78350f,font-size:18px;
-  classDef net fill:#dcfce7,stroke:#16a34a,color:#14532d,font-size:18px;
+  classDef host fill:#f1f5f9,stroke:#94a3b8,color:#0f172a;
+  classDef box fill:#e0ecff,stroke:#2563eb,color:#0f172a;
+  classDef ai fill:#dbeafe,stroke:#1d4ed8,color:#0f172a,font-weight:600;
+  classDef sec fill:#fee2e2,stroke:#dc2626,color:#7f1d1d;
+  classDef fw fill:#fef3c7,stroke:#d97706,color:#78350f;
+  classDef net fill:#dcfce7,stroke:#16a34a,color:#14532d;
   class HOST host
+  class NETZONE host
   class BOX box
   class AI ai
   class SEC sec
